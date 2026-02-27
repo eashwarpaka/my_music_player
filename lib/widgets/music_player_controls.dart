@@ -156,7 +156,13 @@ class MusicPlayerControls extends StatelessWidget {
                     ),
                   ),
                   child: Slider(
-                    value: position.inSeconds.toDouble(),
+                    value:
+                        position.inSeconds
+                            .clamp(
+                              0,
+                              duration.inSeconds > 0 ? duration.inSeconds : 1,
+                            )
+                            .toDouble(),
                     max:
                         duration.inSeconds > 0
                             ? duration.inSeconds.toDouble()

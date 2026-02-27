@@ -1,9 +1,15 @@
-import 'package:my_music/ui/audio_library_page.dart';
-
 import 'config/app_imports.dart';
+import 'core/theme/app_theme.dart';
+import 'core/theme/theme_controller.dart';
+import 'ui/screens/root_screen.dart';
 
 void main() {
-  runApp(const AudioPlayerApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeController(),
+      child: const AudioPlayerApp(),
+    ),
+  );
 }
 
 class AudioPlayerApp extends StatelessWidget {
@@ -11,9 +17,14 @@ class AudioPlayerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AudioLibraryPage(),
+    final themeController = context.watch<ThemeController>();
+
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeController.currentTheme,
+      home: const RootScreen(), // ✅ IMPORTANT
     );
   }
 }
